@@ -1,0 +1,5 @@
+com/facebook/adStats/main/App.class
+com/google/bigquery/main/BQOperations.class
+com/facebook/ads/common/AdsFetcher.class
+com/google/bigquery/main/GAuthenticate.class
+com/facebook/ads/common/AdAccount.class
