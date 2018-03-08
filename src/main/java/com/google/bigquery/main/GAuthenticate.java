@@ -54,11 +54,11 @@ public class GAuthenticate {
 	
 		try{
 
-//			GoogleCredential credential = GoogleCredential.fromStream(new FileInputStream("C:\\Program Files\\Java\\projects\\FacebookAdStats\\target\\Cloud Project 1-a5efe977981f.json"))
-//				    .createScoped(BigqueryScopes.all());
-			
-			GoogleCredential credential = GoogleCredential.fromStream(new FileInputStream("/home/bhuvnesh/Desktop/Cloud Project 1-a5efe977981f.json"))
+			GoogleCredential credential = GoogleCredential.fromStream(new FileInputStream("C:\\Program Files\\Java\\projects\\FacebookAdStats\\target\\Cloud Project 1-a5efe977981f.json"))
 				    .createScoped(BigqueryScopes.all());
+			
+//			GoogleCredential credential = GoogleCredential.fromStream(new FileInputStream("/home/bhuvnesh/Desktop/Cloud Project 1-a5efe977981f.json"))
+//				    .createScoped(BigqueryScopes.all());
 			
 			return credential;
 

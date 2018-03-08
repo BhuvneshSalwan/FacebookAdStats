@@ -2,8 +2,8 @@ package com.facebook.ads.common;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -18,11 +18,11 @@ public class AdAccount {
 	public static final String VERSION = "v2.11";
 	public static final String SESSION_TOKEN = "EAAWXmQeQZAmcBAJHkodkpmV1ZBX7S9t9eQDsmbBpr0KVFAoGYhV9vAw00a2sYkoM22lVp0s0RVxi0Uiw2cgxjBJyJ3AZAbwEP4MRZAFU7e0kq6ssOtUMMOsgZA2bYMypkyS8HDtJYHb3Wa8fPknN8Vd7cieifdE8j77qisyyw4wZDZD";
 	
-public static ArrayList<String> getAdAccounts(){
+	public static ArrayList<String> getAdAccounts(){
 		
 		try{
 			
-			String custom_url = URL + "/" + VERSION + "/" + "me/adaccounts?limit=1000&access_token=" + SESSION_TOKEN;
+			String custom_url = URL + "/" + VERSION + "/" + "me/adaccounts?fields=timezone_offset_hours_utc,account_id&limit=1000&access_token=" + SESSION_TOKEN;
 			
 			HttpClient reqclient = new DefaultHttpClient();
 			HttpGet reqget = new HttpGet(custom_url);
@@ -61,8 +61,22 @@ public static ArrayList<String> getAdAccounts(){
 							
 							JSONObject adAccountObj = dataObj.getJSONObject(arr_i);
 							
-							if(adAccountObj.has("account_id")){
-								adAccountList.add(adAccountObj.getString("account_id"));
+							if(adAccountObj.has("account_id") && adAccountObj.has("timezone_offset_hours_utc")){
+								
+								int offset = (((((int)adAccountObj.getDouble("timezone_offset_hours_utc")) - 8)*(-1)) + 24);
+								
+								if(Math.abs((offset % 24) - Calendar.getInstance().getTime().getHours()) < 1) {
+								
+									System.out.println("ACCOUNT ID ADDED : " + adAccountObj.getString("account_id"));
+									adAccountList.add(adAccountObj.getString("account_id"));
+									
+								}
+								else {
+									
+									System.out.println("ACCOUNT ID : " + adAccountObj.getString("account_id") + " NOT ADDED.");
+								
+								}
+							
 							}
 							else{
 								continue;
